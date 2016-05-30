@@ -67,6 +67,9 @@ def get_license(name, args):
                 filename
             ))
             return 0
+    else:
+        print('No license text found')
+        return 1
 
 
 def get_license_text(license):
