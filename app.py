@@ -54,7 +54,10 @@ def get_license(name, args):
 
         with open(filename, 'w') as f:
             f.write(text)
-            print('Wrote contents of {0} to {1}.'.format(license['name'], filename))
+            print('Wrote contents of {0} to {1}.'.format(
+                license['name'],
+                filename
+            ))
             return 0
 
 
@@ -76,7 +79,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('license', metavar='NAME', help='the license to add')
-    parser.add_argument('--file', metavar='FILE', help='where to write the license', required=False)
+    parser.add_argument(
+        '--file',
+        metavar='FILE',
+        help='where to write the license'
+    )
     args = parser.parse_args()
 
     sys.exit(get_license(args.license, args))
