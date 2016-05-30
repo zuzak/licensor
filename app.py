@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 #
-# Copyright © 2016 douglas <douglas@clayborne>
+# Copyright © 2016 Douglas Gardner <douglas@chippy.ch>
 #
 # Distributed under terms of the MIT license.
 
