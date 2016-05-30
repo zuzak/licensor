@@ -17,6 +17,7 @@ import requests
 import sys
 
 ENDPOINT_LICENSES = 'https://api.opensource.org/licenses/'
+ENDPOINT_TEXTS = 'https://raw.githubusercontent.com/OpenSourceOrg/licenses/master/texts/plain/'
 
 
 def pull_licenses():
@@ -76,6 +77,12 @@ def get_license_text(license):
         if text['media_type'] == 'text/plain':
             res = requests.get(text['url'])
             return res.text()
+
+    # No nicely formatted license text
+    url = ENDPOINT_TEXTS + license['id']
+    res = requests.get(url)
+    if res.status_code == 200:
+        return res.text
 
     return None
 
