@@ -31,10 +31,18 @@ def pull_licenses():
 
 
 def get_license(name, args):
+    licenses = pull_licenses()
     try:
-        license = pull_licenses()[name]
+        license = licenses[name]
     except KeyError:
-        sys.exit('Error: license not found!')
+        print('You need to specify a license\'s identifier.')
+        print('Popular licenses are:')
+        print_popular_licenses(licenses)
+        print()
+        print('For an exhaustive list of licenses and their identifiers,')
+        print('see https://opensource.org/licenses')
+
+        return 1
 
     if license['superseded_by']:
         if prompt_boolean('{0} has been superseded by {1}. Use that instead?'
@@ -116,6 +124,25 @@ def replace_placeholders(text):
 
 def prompt_boolean(question):
     return strtobool(input('{0} [y/n]: '.format(question)))
+
+
+def print_popular_licenses(licenses):
+    popular = []
+    tab = 0
+    for license in licenses:
+        license = licenses[license]
+        if 'popular' in license['keywords']:
+            popular.append([license['id'], license['name']])
+            if len(license['id']) > tab:
+                tab = len(license['id'])
+
+    for entry in popular:
+        print('{0} ({1})'.format(
+            entry[0].ljust(tab),
+            entry[1]
+        ))
+
+    return popular
 
 
 def get_real_name():
