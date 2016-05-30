@@ -35,8 +35,9 @@ def get_license(name, args):
     try:
         license = licenses[name]
     except KeyError:
-        print('You need to specify a license\'s identifier.')
-        print('Popular licenses are:')
+        print('The license you asked for couldn\'t be found.')
+        print('Specify it via its identifer, such as one of the following:')
+        print()
         print_popular_licenses(licenses)
         print()
         print('For an exhaustive list of licenses and their identifiers,')
