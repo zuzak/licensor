@@ -1,4 +1,5 @@
 # licensor
+[![Build Status](https://travis-ci.org/zuzak/licensor.svg?branch=master)](https://travis-ci.org/zuzak/licensor)
 
 Tool to pull a licence from the OSI website and into your new software project.
 
