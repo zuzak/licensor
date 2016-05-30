@@ -93,7 +93,7 @@ def get_license_text(license):
     for text in texts:
         if text['media_type'] == 'text/plain':
             res = requests.get(text['url'])
-            return res.text()
+            return res.text
 
     # No nicely formatted license text
     url = ENDPOINT_TEXTS + license['id']
