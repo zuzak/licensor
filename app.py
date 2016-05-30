@@ -43,6 +43,14 @@ def get_license(name, args):
         ):
             return get_license(license['superseded_by'])
 
+    if 'discouraged' in license['keywords']:
+        if not prompt_boolean(
+            'Use of the {0} has been discouraged by the Open Source Initative.'
+            ' Continue?'
+            .format(license['name'])
+        ):
+            return 1
+
     text = get_license_text(license)
     if text:
         filename = args.file
