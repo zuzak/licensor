@@ -14,16 +14,15 @@ from distutils.util import strtobool
 
 import argparse
 import json
+import requests
 import sys
-from urllib.request import urlopen
 
 ENDPOINT_LICENSES = 'https://api.opensource.org/licenses/'
 
 
 def pull_licenses():
-    res = urlopen(ENDPOINT_LICENSES)
-    with urlopen(ENDPOINT_LICENSES) as res:
-        licenses = json.loads(res.read().decode())
+    data = requests.get(ENDPOINT_LICENSES)
+    licenses = data.json()
 
     return {x['id']: x for x in licenses}
 
@@ -76,8 +75,8 @@ def get_license_text(license):
     texts = license['text']
     for text in texts:
         if text['media_type'] == 'text/plain':
-            res = urlopen(text['url'])
-            return res.read().decode()
+            res = requests.get(text['url'])
+            return res.text()
 
     return None
 
