@@ -62,6 +62,10 @@ def get_license(name, args):
             else:
                 filename = 'LICENSE'
 
+        if os.path.isfile(filename) and not args.clobber:
+            print('{0} already exists; shan\'t clobber'.format(filename))
+            return 1
+
         text = replace_placeholders(text)
         with open(filename, 'w') as f:
             f.write(text)
@@ -121,6 +125,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('license', metavar='NAME', help='the license to add')
+    parser.add_argument('--clobber', help='overwrite an existing license file')
     parser.add_argument(
         '--file',
         metavar='FILE',
