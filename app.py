@@ -11,8 +11,11 @@ Speeds up adding a license to new software projects.
 """
 
 from distutils.util import strtobool
+from datetime import datetime
 
 import argparse
+import os
+import pwd
 import requests
 import sys
 
@@ -59,6 +62,7 @@ def get_license(name, args):
             else:
                 filename = 'LICENSE'
 
+        text = replace_placeholders(text)
         with open(filename, 'w') as f:
             f.write(text)
             print('Wrote contents of {0} to {1}.'.format(
@@ -87,9 +91,31 @@ def get_license_text(license):
     return None
 
 
+def replace_placeholders(text):
+    # There are many placeholders used within OSI licenses
+    # and none of them are standard, so this is just a
+    # small selection to cover some of the more popular ones
+    placeholders = {
+        '<YEAR>': str(datetime.now().year),
+        '<OWNER>': get_real_name(),
+        '<COPYRIGHT HOLDER>': get_real_name()
+    }
+    old = text
+
+    for key in placeholders:
+        text = text.replace(key, placeholders[key])
+
+    if old != text:
+        print('Rewrote license to contain your details')
+    return text
+
+
 def prompt_boolean(question):
     return strtobool(input('{0} [y/n]: '.format(question)))
 
+
+def get_real_name():
+    return pwd.getpwuid(os.getuid())[4]
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
