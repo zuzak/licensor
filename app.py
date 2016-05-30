@@ -13,7 +13,6 @@ Speeds up adding a license to new software projects.
 from distutils.util import strtobool
 
 import argparse
-import json
 import requests
 import sys
 
